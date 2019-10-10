@@ -1,0 +1,43 @@
+version: '2'
+services:
+  web:
+    image: phundament/nginx-one:1.9-5.1.1
+    environment:
+      - FASTCGI_PASS_HOST=php
+    ports:
+      - '8100:80'
+    volumes:
+      - ./_host-volumes/app/web:/app/web:delegated
+  php:
+    build:
+      dockerfile: Dockerfile-debian
+      context: 'php'
+      args:
+        - PHP_BASE_IMAGE_VERSION=7.3-fpm
+    image: local/yiisoftware/yii2-php:7.3-fpm
+    environment:
+      - PHP_ENABLE_XDEBUG
+      - TEST_RUNTIME_PATH=/tmp/runtime
+    volumes:
+      - ./tests:/tests:delegated
+      - ./_host-volumes/yii2:/yii2:delegated
+      - ./_host-volumes/app:/app:delegated
+      - ./.composer-docker/cache:/root/.composer/cache:delegated
+    links:
+        - mysql
+    ports:
+      - '8000:80'
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+        - "3306:3306"
+    volumes:
+        - ./mysql:/var/lib/mysql
+    networks: 
+      - default
