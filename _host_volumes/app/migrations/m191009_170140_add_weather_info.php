@@ -18,6 +18,11 @@ class m191009_170140_add_weather_info extends Migration
             'city' => Schema::TYPE_STRING . ' NOT NULL',
             'temp' => Schema::TYPE_STRING . ' NOT NULL',
 		]);
+
+		$weather = new \app\models\Weather();
+		$weather->city = 'chelyabinsk';
+		$weather->temp = '0';
+        $weather->save(false);
     }
 
     /**
