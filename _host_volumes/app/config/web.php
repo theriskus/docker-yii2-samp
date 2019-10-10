@@ -43,14 +43,18 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'site/index',
+                'admin' => 'weather-crud',
+                'weather' => 'api/weather',
+                'auth' => 'api/auth'
             ],
         ],
-        */
+
     ],
     'params' => $params,
 ];

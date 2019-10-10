@@ -65,6 +65,16 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays test apipage.
+     *
+     * @return string
+     */
+    public function actionTest()
+    {
+        return $this->render('test');
+    }
+
+        /**
      * Login action.
      *
      * @return Response|string
